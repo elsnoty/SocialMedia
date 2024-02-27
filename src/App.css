@@ -31,3 +31,31 @@ a{
 .userdetails h1, img, button{
   margin-left: 10px;
 }
+
+form{
+  margin: 40px auto;
+  background-color: darkcyan;
+  padding: 25px;
+  width: 400px;
+  border-radius: 5px;
+}
+
+form .title-post, .description-post{
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+.title-post:focus, .description-post:focus{
+  outline: auto darkcyan;
+}
+
+form .submit-form{
+  padding: 7px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}

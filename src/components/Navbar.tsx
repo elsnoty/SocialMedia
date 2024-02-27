@@ -11,7 +11,11 @@ export const Navbar =()=>{
         <div className="navbar">
             <div className="pages">
                 <Link to={"/"}> Home </Link>
+                { !user ?
                 <Link to={"/Login"}> Login </Link>
+                :
+                <Link to={"/AddPost"}> Add Post </Link>
+                }
             </div>
             { user &&
             <div className="userdetails">
