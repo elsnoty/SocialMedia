@@ -1,8 +1,10 @@
 import { auth } from "../config/firebase"
-import { Link } from "react-router-dom"
+import { Link  } from "react-router-dom"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { signOut } from "firebase/auth"
+
 export const Navbar =()=>{
+    
     const [user] = useAuthState(auth)
     const userSignOut = async ()=>{
         await signOut(auth)
@@ -10,12 +12,16 @@ export const Navbar =()=>{
     return(
         <div className="navbar">
             <div className="pages">
-                <Link to={"/"}> Home </Link>
-                { !user ?
-                <Link to={"/Login"}> Login </Link>
+            
+                
+                <Link to={"/"}>Home</Link>
+                { user ?
+                <Link to={"/AddPost"}>Add Post</Link>
                 :
-                <Link to={"/AddPost"}> Add Post </Link>
-                }
+                <Link to={"/Login"}>Login</Link>
+                
+}
+
             </div>
             { user &&
             <div className="userdetails">

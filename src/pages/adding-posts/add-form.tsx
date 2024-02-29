@@ -6,12 +6,11 @@ import { DB} from "../../config/firebase"
 import { auth } from "../../config/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-interface DataForm {
+export interface DataForm {
     title: string,
     description:string,
+    
 }
-
-
 
 export const AddForm = ()=>{
     const navigate = useNavigate();
@@ -26,9 +25,9 @@ export const AddForm = ()=>{
     })
 
     const [user] = useAuthState(auth)
-    const posts = collection(DB, "posts")
+    const postsRef = collection(DB, "posts")
     const onaddPost= async (data: DataForm)=>{
-        await addDoc(posts, {
+        await addDoc(postsRef, {
             ...data,
             username: user?.displayName,
             userId: user?.uid
