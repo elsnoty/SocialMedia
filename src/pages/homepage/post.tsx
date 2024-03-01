@@ -17,7 +17,7 @@ export const Post= (props: Props)=>{
     const [likeAmount, setLikeAmount] = useState<Like[] | null>(null)
 
     const [user] = useAuthState(auth)
-    const likesRef = collection(DB, "Likes") //get collection from database
+    const likesRef = collection(DB, "Like") //get collection from database
 
     const likeDoc = query(likesRef, where("postid", "==", post.id)) 
 
@@ -27,11 +27,7 @@ export const Post= (props: Props)=>{
         setLikeAmount(data.docs.map((doc)=> ({userId: doc.data().userId, likeId:doc.id})))
     }
 
-    const hasLiked = likeAmount?.find((like)=> like.userId === user?.uid) // fn => check user and like to remove like 
 
-    useEffect(()=>{
-        getLikes() 
-    }, [])
 
     const addLike =async()=>{ // to save the data if you click on like and send it to database
         try{
@@ -51,14 +47,17 @@ export const Post= (props: Props)=>{
     }
     } ;
 
+    
     const deleteLike =async()=>{ // to save the data if you click on like and send it to database
         try{
             //
-            const likeToDeleteQuery = query(likesRef, where("postid", "==", post.id), where("userId", "==", user?.uid)) 
+            const likeToDeleteQuery = query(likesRef,
+                where("postid", "==", post.id), 
+                where("userId", "==", user?.uid));
 
             const dataToDelete = await getDocs(likeToDeleteQuery) 
 
-            const likeToDelete = doc(DB ,"like", dataToDelete.docs[0].id)
+            const likeToDelete = doc(DB ,"Like", dataToDelete.docs[0].id)
             
         await deleteDoc(likeToDelete)
 
@@ -75,6 +74,11 @@ export const Post= (props: Props)=>{
     }
     } ;
 
+    const hasLiked = likeAmount?.find((like)=> like.userId === user?.uid) // fn => check user and like to remove like 
+
+    useEffect(()=>{
+        getLikes() 
+    }, [])
     
     return(
         <div>
@@ -87,6 +91,4 @@ export const Post= (props: Props)=>{
     )
 }
 
-function Doc() {
-    throw new Error("Function not implemented.")
-}
+
